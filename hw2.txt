@@ -15,11 +15,11 @@ Initialized empty Git repository in /Users/Varun/Documents/ITU/Course work/Versi
 swe	https://github.com/varun-ch/SWE525HW2-C.git (fetch)
 swe	https://github.com/varun-ch/SWE525HW2-C.git (push)
 ➜  SWE525HW2-C git:(master) 
-
+===================================
 What command did you use to configure the remote?
 
 ➜  SWE525HW2-C git:(master) git remote add swe https://github.com/varun-ch/SWE525HW2-C.git
-
+===================================
 Instead of creating a new git repository and configuring it with this remote, I could have asked you to git clone the repo from afs. If you had done so, what would the output of git remote -v be?
 
 Git clone will automatically create a remote handle and assign origin as the short name for the url you specified. Origin is the default name git gives to the server you cloned from. 
@@ -37,7 +37,7 @@ Checking connectivity... done.
 origin	https://github.com/varun-ch/SWE525HW2-C.git (fetch)
 origin	https://github.com/varun-ch/SWE525HW2-C.git (push)
 ➜  SWE525HW2-C git:(master) 
-
+===================================
 Run git fetch remotename (substituting your remote name for remotename).
 
 ➜  SWE525HW2-C git:(master) git fetch swe
@@ -48,11 +48,11 @@ Unpacking objects: 100% (3/3), done.
 From https://github.com/varun-ch/SWE525HW2-C
    ca4dc43..9a032c5  master     -> swe/master
 ➜  SWE525HW2-C git:(master)
-
+===================================
 Did anything appear in your working directory? Why?
 
 No, I noticed the changes made in remote repository are not reflected yet. 
-
+===================================
 Update your local master branch with the remote one, and give the command you used to do so.
 
 ➜  SWE525HW2-C git:(master) git pull
@@ -69,7 +69,7 @@ Question: Part C
 
 ➜  SWE525HW2-C git:(master) 
 
-
+===================================
 Your working directory should have been updated. You should check that. That means the master branch was updated on the remote. But it's possible that when we ran git fetch, we fetched other branches as well! How could we (i.e. what command could we use) find all the branches we may have gotten from the remote?
 
 ➜  SWE525HW2-C git:(master) git pull   
@@ -87,7 +87,7 @@ Already up-to-date.
   remotes/swe/dev
   remotes/swe/master
 ➜  SWE525HW2-C git:(master)
-
+===================================
 Spoiler: there's another branch. Check it out, find the file on that branch, and give the first five letters of that file as well as the command you used to checkout the branch. NOTE: It's very bad practice to directly git checkout the remote-tracking branch. Instead, try to checkout the branch so that it creates a local branch based on the remote-tracking branch. If you're not sure how (it's pretty easy to guess, though), you can look it up.
 You're going to be submitting your homework on the master branch, so you may want to git checkout back there.
 
@@ -98,7 +98,7 @@ Switched to a new branch 'dev'
 * dev
   master
 ➜  SWE525HW2-C git:(dev)
-
+===================================
 What is a bare repository? What makes it different from normal repositories? In what situations is it used?
 
 Repositories created with git init --bare are called bare repos. They are structured a bit differently from the ones created with git init that has a working directories. 
@@ -107,7 +107,7 @@ Bare repositories do not contain working or checked out copies of the source fil
 
 Central repositories should always be created as bare repositories because pushing branches to a non-bare repository has the potential to overwrite changes.
 
-
+===================================
 In lecture, I was careful to explain the two-step procedure of using git fetch and git merge remotename/branchname to get commits from a remote. When would this be a good idea as opposed to simply doing git pull remotename branchname? Briefly discuss remote-tracking branches and their relevance in your answer.
 
 git fetch really only downloads new data from a remote repository - but it doesn't integrate any of this new data into your working files. Fetch is great for getting a fresh view on all the things that happened in a remote repository.
@@ -150,7 +150,7 @@ file in dev
 ➜  SWE525HW2-C git:(54f0eb5) 
 
 
-
+===================================
 I didn't ask you to do this, but suppose I asked you to make a commit on the 'other' branch. If I wanted you to push this branch, what command would you use?
 
 ➜  SWE525HW2-C git:(dev) git checkout master
@@ -173,4 +173,4 @@ Total 3 (delta 0), reused 0 (delta 0)
 To https://github.com/varun-ch/SWE525HW2-C.git
  * [new branch]      other -> other
 ➜  SWE525HW2-C git:(other) 
-=
+====================================
