@@ -1,3 +1,6 @@
-Varun Ch
+COURSE : SWE 525 Git/Version Control
+NAME: Varun Ch
+ID: 90376
 Homework:2
 Question: Part C
+
