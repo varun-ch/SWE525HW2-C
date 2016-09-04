@@ -1,6 +1,176 @@
+====================================
+COURSE : SWE 525 Git/Version Control
+NAME: Varun Ch
+ID: 90376
+Homework:2
+Question: Part C
+====================================
+
+Create a new git repository somewhere in your filesystem, and configure a remote (called whatever you want, 
+
+➜  SWE525HW2-C git init
+Initialized empty Git repository in /Users/Varun/Documents/ITU/Course work/VersionControl/SWE525HW2-C/.git/
+➜  SWE525HW2-C git:(master) git remote add swe https://github.com/varun-ch/SWE525HW2-C.git
+➜  SWE525HW2-C git:(master) git remote -v
+swe	https://github.com/varun-ch/SWE525HW2-C.git (fetch)
+swe	https://github.com/varun-ch/SWE525HW2-C.git (push)
+➜  SWE525HW2-C git:(master) 
+
+What command did you use to configure the remote?
+
+➜  SWE525HW2-C git:(master) git remote add swe https://github.com/varun-ch/SWE525HW2-C.git
+
+Instead of creating a new git repository and configuring it with this remote, I could have asked you to git clone the repo from afs. If you had done so, what would the output of git remote -v be?
+
+Git clone will automatically create a remote handle and assign origin as the short name for the url you specified. Origin is the default name git gives to the server you cloned from. 
+
+➜  VersionControl mkdir temp
+➜  VersionControl cd temp 
+➜  temp git clone https://github.com/varun-ch/SWE525HW2-C.git
+Cloning into 'SWE525HW2-C'...
+remote: Counting objects: 3, done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+Checking connectivity... done.
+➜  temp cd SWE525HW2-C 
+➜  SWE525HW2-C git:(master) git remote -v
+origin	https://github.com/varun-ch/SWE525HW2-C.git (fetch)
+origin	https://github.com/varun-ch/SWE525HW2-C.git (push)
+➜  SWE525HW2-C git:(master) 
+
+Run git fetch remotename (substituting your remote name for remotename).
+
+➜  SWE525HW2-C git:(master) git fetch swe
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/varun-ch/SWE525HW2-C
+   ca4dc43..9a032c5  master     -> swe/master
+➜  SWE525HW2-C git:(master)
+
+Did anything appear in your working directory? Why?
+
+No, I noticed the changes made in remote repository are not reflected yet. 
+
+Update your local master branch with the remote one, and give the command you used to do so.
+
+➜  SWE525HW2-C git:(master) git pull
+Updating ca4dc43..9a032c5
+Fast-forward
+ hw2.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+➜  SWE525HW2-C git:(master) cat hw2.txt 
 COURSE : SWE 525 Git/Version Control
 NAME: Varun Ch
 ID: 90376
 Homework:2
 Question: Part C
 
+➜  SWE525HW2-C git:(master) 
+
+
+Your working directory should have been updated. You should check that. That means the master branch was updated on the remote. But it's possible that when we ran git fetch, we fetched other branches as well! How could we (i.e. what command could we use) find all the branches we may have gotten from the remote?
+
+➜  SWE525HW2-C git:(master) git pull   
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/varun-ch/SWE525HW2-C
+ * [new branch]      dev        -> swe/dev
+Already up-to-date.
+➜  SWE525HW2-C git:(master) git branch
+* master
+➜  SWE525HW2-C git:(master) git branch -a
+* master
+  remotes/swe/dev
+  remotes/swe/master
+➜  SWE525HW2-C git:(master)
+
+Spoiler: there's another branch. Check it out, find the file on that branch, and give the first five letters of that file as well as the command you used to checkout the branch. NOTE: It's very bad practice to directly git checkout the remote-tracking branch. Instead, try to checkout the branch so that it creates a local branch based on the remote-tracking branch. If you're not sure how (it's pretty easy to guess, though), you can look it up.
+You're going to be submitting your homework on the master branch, so you may want to git checkout back there.
+
+➜  SWE525HW2-C git:(master) git checkout dev
+Branch dev set up to track remote branch dev from swe.
+Switched to a new branch 'dev'
+➜  SWE525HW2-C git:(dev) git branch
+* dev
+  master
+➜  SWE525HW2-C git:(dev)
+
+What is a bare repository? What makes it different from normal repositories? In what situations is it used?
+
+Repositories created with git init --bare are called bare repos. They are structured a bit differently from the ones created with git init that has a working directories. 
+
+Bare repositories do not contain working or checked out copies of the source files. They store git revision history of your repo in the root folder of your repository instead of in a .git subfolder.
+
+Central repositories should always be created as bare repositories because pushing branches to a non-bare repository has the potential to overwrite changes.
+
+
+In lecture, I was careful to explain the two-step procedure of using git fetch and git merge remotename/branchname to get commits from a remote. When would this be a good idea as opposed to simply doing git pull remotename branchname? Briefly discuss remote-tracking branches and their relevance in your answer.
+
+git fetch really only downloads new data from a remote repository - but it doesn't integrate any of this new data into your working files. Fetch is great for getting a fresh view on all the things that happened in a remote repository.
+Due to its "harmless" nature, you can rest assured: fetch will never manipulate, destroy, anything. 
+git pull, in contrast, is used with a different goal in mind: to update your current HEAD branch with the latest changes from the remote server. This means that pull not only downloads new data; it also directly integrates it into your current working copy files. 
+
+Remote-tracking branches are references to the state of remote branches. They’re local references that you can’t move; they’re moved automatically for you whenever you do any network communication. Remote-tracking branches act as bookmarks to remind you where the branches in your remote repositories were the last time you connected to them.
+
+➜  SWE525HW2-C git:(master) git checkout dev 
+Switched to branch 'dev'
+Your branch is up-to-date with 'swe/dev'.
+➜  SWE525HW2-C git:(dev) ls -ltr
+total 16
+-rw-r--r--  1 Varun  staff  37 Sep  3 22:46 hw2.txt
+-rw-r--r--  1 Varun  staff  12 Sep  3 22:46 file1.txt
+➜  SWE525HW2-C git:(dev) echo "new line in f1" >> file1.txt 
+➜  SWE525HW2-C git:(dev) ✗ git add . && git commit -m "new line in file1"
+[dev b0ae095] new line in file1
+ 1 file changed, 1 insertion(+)
+➜  SWE525HW2-C git:(dev) cat file1.txt 
+file in dev
+new line in f1
+➜  SWE525HW2-C git:(dev) gti checkout swe/dev
+zsh: command not found: gti
+➜  SWE525HW2-C git:(dev) git checkout swe/dev
+Note: checking out 'swe/dev'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 54f0eb5... add file1.txt
+➜  SWE525HW2-C git:(54f0eb5) cat file1.txt 
+file in dev
+➜  SWE525HW2-C git:(54f0eb5) 
+
+
+
+I didn't ask you to do this, but suppose I asked you to make a commit on the 'other' branch. If I wanted you to push this branch, what command would you use?
+
+➜  SWE525HW2-C git:(dev) git checkout master
+Switched to branch 'master'
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+➜  SWE525HW2-C git:(master) git checkout -b other
+Switched to a new branch 'other'
+➜  SWE525HW2-C git:(other) echo "f1 in other" > f1.txt
+c%                                                                                                                                                                                   ➜  SWE525HW2-C git:(other) ✗ git add . && git commit -m "new file f1 in other"
+[other 30b5ce9] new file f1 in other
+ 1 file changed, 1 insertion(+)
+ create mode 100644 f1.txt
+➜  SWE525HW2-C git:(other) git push origin other
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 281 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/varun-ch/SWE525HW2-C.git
+ * [new branch]      other -> other
+➜  SWE525HW2-C git:(other) 
+=
